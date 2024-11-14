@@ -6,10 +6,12 @@ import { useResponse } from "@/contexts/ResponseContext";
 import { Apple, Beef, CookingPot, Donut, Droplet, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Hasil() {
 
     const { responseData } = useResponse();
+    const [isLoading, setIsLoading] = useState(false)
 
     const listGizi = [
         {
@@ -97,7 +99,7 @@ export default function Hasil() {
                         </Card>
                     )}
                 </div>
-                <Button>
+                <Button onClick={() => setIsLoading(true)} disabled={isLoading}>
                     <Link href="/bahan">Lihat Rekomendasi Makanan</Link>
                 </Button>
             </div>

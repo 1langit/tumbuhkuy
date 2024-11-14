@@ -18,6 +18,7 @@ import { z } from "zod";
 export default function Profil() {
 
     const FormSchema = z.object({
+        id: z.string().length(7),
         email: z.string().email({ message: "Email tidak valid." }),
         name: z.string().min(0, { message: "Tidak boleh kosong" }),
         dob: z.date({ required_error: "Tidak boleh kosong" }),
@@ -28,11 +29,12 @@ export default function Profil() {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            email: "user@mail.com",
-            name: "User",
-            dob: new Date("1990-05-15"),
-            gender: "L",
-            medicalHistory: ["covid_19", "stunting"],
+            id: "TK35522",
+            email: "annisarahma@gmail.com",
+            name: "Annisa Rahma",
+            dob: new Date("2020-01-02"),
+            gender: "P",
+            medicalHistory: ["alergi_debu"],
         },
     })
 
@@ -46,12 +48,13 @@ export default function Profil() {
                 <div className="flex space-x-4 py-4">
                     <CircleUserRound size={60} strokeWidth={1.25} className="text-gray-300 mb-2" />
                     <div>
-                        <h3 className="text-xl font-medium">User</h3>
-                        <p>tumbuhkuy@gmail.com</p>
+                        <h3 className="text-xl font-medium leading-none">{form.watch("name")}</h3>
+                        <p className="">{form.watch("email")}</p>
+                        <p className="text-muted-foreground text-xs pt-1">ID: {form.watch("id")}</p>
                     </div>
                 </div>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-xl space-y-6">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-xl space-y-6 mt-4">
                         <FormField
                             control={form.control}
                             name="name"

@@ -13,7 +13,7 @@ export default function Loasing() {
                     clearInterval(interval);
                     return 100;
                 }
-                return prev + 1;
+                return prev + 2;
             });
         }, 1);
 

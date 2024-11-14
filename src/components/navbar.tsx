@@ -52,9 +52,12 @@ export default function Navbar() {
                             </PopoverTrigger>
                             <PopoverContent className="flex flex-col items-center max-w-[280px]">
                                 <CircleUserRound size={60} strokeWidth={1.25} className="text-gray-300 mb-2" />
-                                <h4 className="font-medium">User</h4>
                                 <p className="text-sm text-muted-foreground max-w-[240px] break-words">
-                                    tumbuhkuy@gmail.com
+                                    TK35522
+                                </p>
+                                <h4 className="font-medium">Annisa Rahma</h4>
+                                <p className="text-sm text-muted-foreground max-w-[240px] break-words">
+                                    annisarahma@gmail.com
                                 </p>
                                 <Separator className="mt-3" />
                                 <div className="flex items-center">

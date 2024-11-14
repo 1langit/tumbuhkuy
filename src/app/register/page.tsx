@@ -15,7 +15,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import Image from "next/image"
-import Cover from "@/assets/cover2.png"
+import Cover from "@/assets/cover3.png"
+import Welcome from "@/assets/8.png"
 import Logo from "@/assets/logo.png"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
@@ -69,16 +70,16 @@ export default function Register() {
                 <div className="relative z-20 mt-auto">
                     <blockquote className="space-y-2">
                         <p className="text-lg">
-                            &ldquo;This library has saved me countless hours of work and
-                            helped me deliver stunning designs to my clients faster than ever
-                            before.&rdquo;
+                            &ldquo;
+                            Anak-anak adalah titipan masa depan, harapan bangsa yang harus dijaga dan dilindungi. Saat kita memberi mereka gizi yang cukup, kita menumbuhkan bukan hanya tubuh mereka, tetapi juga impian, potensi, dan kekuatan untuk menghadapi dunia.
+                            &rdquo;
                         </p>
-                        <footer className="text-sm">Sofia Davis</footer>
+                        <footer className="text-sm">TumbuhKuy</footer>
                     </blockquote>
                 </div>
             </div>
-            <div className="flex h-full items-center p-4 lg:p-8">
-                <div className="mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[350px]">
+            <div className="flex mx-auto h-full items-center p-4 lg:p-8">
+                <div className="flex w-full flex-col justify-center space-y-2 sm:w-[350px]">
                     <div className="flex flex-col space-y-2 text-center">
                         <h1 className="text-2xl font-semibold tracking-tight">
                             Buat Akun
@@ -300,6 +301,7 @@ export default function Register() {
                         </div>
                     }
                 </div>
+                <Image src={Welcome} alt="" width={160} className="ms-4 hidden sm:inline" />
             </div>
         </main>
     )

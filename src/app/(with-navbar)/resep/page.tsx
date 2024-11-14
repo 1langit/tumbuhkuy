@@ -1,14 +1,14 @@
 "use client"
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useResponse } from "@/contexts/ResponseContext";
 import { Recipe } from "@/type/recipe";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import SaveButton from "@/components/save-button";
+import Link from "next/link";
 
 export default function Resep() {
 
@@ -24,7 +24,7 @@ export default function Resep() {
         <main className='w-full'>
             <div className='max-w-[1100px] mx-auto px-4 flex flex-col justify-center w-full h-full' >
                 <div className="py-12">
-                    <h1 className="text-3xl">Rekomendasi Resep Makanan</h1>
+                    <h1 className="text-3xl">Resep Tersimpan</h1>
                     {/* <p>Berdasarkan lokasi anda di sekitar Pogung</p> */}
                 </div>
                 <div className="grid grid-cols-3 gap-4 mb-12">
@@ -70,7 +70,7 @@ export default function Resep() {
                                         )}
                                     </ol>
                                 </div>
-                                <DialogFooter className="sm:justify-between">
+                                <DialogFooter className="sm:justify-between pt-2">
                                     <DialogClose asChild>
                                         <Button type="button" variant="secondary">
                                             Tutup
@@ -82,6 +82,9 @@ export default function Resep() {
                         </Dialog>
                     ))}
                 </div>
+                {/* <Button variant="secondary" className="w-fit ms-auto">
+                    <Link href="/dashboard">Kembali ke Beranda</Link>
+                </Button> */}
             </div>
         </main>
     )

@@ -60,6 +60,7 @@ export default function Bahan() {
     const [ingredients, setIngredients] = useState<Ingredient[]>([])
     const [isPriceDialogOpen, setIsPriceDialogOpen] = useState(true);
     const [recommendation, setRecommendation] = useState<OptimizedIngredient>()
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         api.get("/ingredients")
@@ -76,9 +77,9 @@ export default function Bahan() {
         api.post("/optimized_ingredients",
             {
                 "is_female": true,
-                "year_age": 15,
-                "mode": "gizi",
-                "massa_tubuh": 50,
+                "year_age": 4,
+                "mode": "stunting",
+                "massa_tubuh": 20,
                 "max_price": treshold.price
             }
         ).then(res => {
@@ -124,6 +125,7 @@ export default function Bahan() {
     } satisfies ChartConfig
 
     function onSubmitPick(data: z.infer<typeof FormSchema>) {
+        setIsLoading(true)
         data.ingredients = selectedIngredients.map(item => item.ingredient.name)
         console.log(data)
         api.post("/recipes/ingredients", data)
@@ -132,9 +134,11 @@ export default function Bahan() {
                 setResponseData(res.data)
                 router.push("/resep")
             }).catch(err => console.log(err))
+            .finally(() => setIsLoading(false))
     }
     
     function onSubmitRecommend(data: z.infer<typeof FormSchema>) {
+        setIsLoading(true)
         data.ingredients = recommendation?.optimized_ingredients ?? []
         console.log(data)
         api.post("/recipes/ingredients", data)
@@ -143,6 +147,7 @@ export default function Bahan() {
                 setResponseData(res.data)
                 router.push("/resep")
             }).catch(err => console.log(err))
+            .finally(() => setIsLoading(false))
     }
 
     return (
@@ -192,7 +197,7 @@ export default function Bahan() {
                                     </ChartContainer>
                                     <Card className="hidden sm:inline text-sm bg-muted">
                                         <CardHeader className="space-y-4">
-                                            <div className="leading-none text-muted-foreground">
+                                            <div className="text-muted-foreground">
                                                 Bahan yang direkomendasikan:
                                             </div>
                                             <ol className="font-medium list-decimal ps-4">
@@ -202,7 +207,7 @@ export default function Bahan() {
                                             </ol>
                                             <Form {...form}>
                                                 <form onSubmit={form.handleSubmit(onSubmitRecommend)} className="w-full">
-                                                    <Button type="submit" className="w-full">Pilih Resep</Button>
+                                                    <Button type="submit" disabled={isLoading} className="w-full">Pilih Resep</Button>
                                                 </form>
                                             </Form>
                                         </CardHeader>
@@ -212,17 +217,17 @@ export default function Bahan() {
                                     <Card className="w-full">
                                         <CardHeader className="space-y-2 text-sm">
                                             <div className="leading-none text-muted-foreground">
-                                                Bahan yang direkomendasikan
+                                                Bahan yang direkomendasikan:
                                             </div>
-                                            <div className="flex gap-2 font-medium leading-none">
+                                            <div className="font-medium">
                                                 {recommendation?.optimized_ingredients.map((ing, i) =>
-                                                    <p key={i}>{ing}{i !== recommendation?.optimized_ingredients.length - 1 && ";"} </p>
+                                                    <span key={i}>{ing}{i !== recommendation?.optimized_ingredients.length - 1 && ";"} </span>
                                                 )}
                                             </div>
                                             <br />
                                             <Form {...form}>
                                                 <form onSubmit={form.handleSubmit(onSubmitRecommend)} className="w-full">
-                                                    <Button type="submit" className="w-full">Pilih Resep</Button>
+                                                    <Button type="submit" disabled={isLoading} className="w-full">Pilih Resep</Button>
                                                 </form>
                                             </Form>
                                         </CardHeader>
@@ -363,7 +368,7 @@ export default function Bahan() {
                                             <Form {...form}>
                                                 <form onSubmit={form.handleSubmit(onSubmitPick)}>
                                                     {isSufficient ? "Bahan yang dipilih sudah mencukupi kebutuhan gizi" : "Bahan yang dipilih belum mencukupi kebutuhan gizi"}
-                                                    <Button type="submit" className="ms-4" disabled={!isSufficient}>
+                                                    <Button type="submit" className="ms-4" disabled={!isSufficient || isLoading}>
                                                         Pilih Resep
                                                     </Button>
                                                 </form>

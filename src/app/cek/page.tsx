@@ -16,7 +16,9 @@ import {
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import Logo from "@/assets/logo.png"
-import Cover from "@/assets/cover1.png"
+import Cover from "@/assets/cover2.png"
+import Boy from "@/assets/5.png"
+import Girl from "@/assets/7.png"
 import { useRouter } from "next/navigation"
 import api from "@/lib/api"
 import { useResponse } from "@/contexts/ResponseContext"
@@ -28,6 +30,7 @@ export default function CekStunting() {
     const router = useRouter()
     const { setResponseData } = useResponse()
 
+    const [isLoading, setIsLoading] = useState(false)
     const [message, setMessage] = useState("Cek apakah kamu stunting atau kurang gizi")
 
     const FormSchema = z.object({
@@ -53,7 +56,9 @@ export default function CekStunting() {
 
     function onSubmit(data: z.infer<typeof FormSchema>) {
         console.log(data)
+        setIsLoading(true)
         setMessage("Cek apakah kamu stunting atau kurang gizi")
+
         api.post("/classify_status", data)
             .then(res => {
                 console.log(res.data)
@@ -76,7 +81,7 @@ export default function CekStunting() {
         })).catch(err => {
             console.log(err.response)
             setMessage("Terjadi kesalahan jaringan. Silahkan coba lagi")
-        })
+        }).finally(() => setIsLoading(false))
     }
 
     return (
@@ -138,13 +143,21 @@ export default function CekStunting() {
         <div className="relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
             <div className="flex h-full items-center p-4 lg:p-8">
                 <div className="mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[350px]">
-                    <div className="flex flex-col space-y-2 text-center">
-                        <h1 className="text-2xl font-semibold tracking-tight">
-                            Cek Stunting
-                        </h1>
-                        <p className={`text-sm ${message.includes("kesalahan") ? "text-destructive" : "text-muted-foreground"}`}>
-                            {message}
-                        </p>
+                    <div className="flex items-center">
+                        <div className="relative z-20 flex items-center text-lg font-medium me-auto -translate-x-8">
+                            <Image src={Boy} alt="" width={100} />
+                        </div>
+                        <div className="flex flex-col space-y-2 text-center">
+                            <h1 className="text-2xl font-semibold tracking-tight">
+                                Cek Stunting
+                            </h1>
+                            <p className={`text-sm ${message.includes("kesalahan") ? "text-destructive" : "text-muted-foreground"}`}>
+                                {message}
+                            </p>
+                        </div>
+                        <div className="relative z-20 flex items-center text-lg font-medium ms-auto translate-x-8 translate-y-4">
+                            <Image src={Girl} alt="" width={100} />
+                        </div>
                     </div>
                     <br />
                     <>
@@ -197,7 +210,7 @@ export default function CekStunting() {
                                     )}
                                 />
                                 <br />
-                                <Button className="ml-auto w-full" type="submit">
+                                <Button className="ml-auto w-full" type="submit" disabled={isLoading}>
                                     Cek Sekarang
                                 </Button>
                             </form>
@@ -214,11 +227,11 @@ export default function CekStunting() {
                 <div className="relative z-20 mt-auto">
                     <blockquote className="space-y-2">
                         <p className="text-lg">
-                            &ldquo;This library has saved me countless hours of work and
-                            helped me deliver stunning designs to my clients faster than ever
-                            before.&rdquo;
+                            &ldquo;
+                            Anak-anak adalah titipan masa depan, harapan bangsa yang harus dijaga dan dilindungi. Saat kita memberi mereka gizi yang cukup, kita menumbuhkan bukan hanya tubuh mereka, tetapi juga impian, potensi, dan kekuatan untuk menghadapi dunia.
+                            &rdquo;
                         </p>
-                        <footer className="text-sm">Sofia Davis</footer>
+                        <footer className="text-sm">TumbuhKuy</footer>
                     </blockquote>
                 </div>
             </div>
